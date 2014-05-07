@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <View
+        android:id="@+id/strut"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/btnA"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@id/strut"
+        android:text="@string/btnA" />
+
+    <Button
+        android:id="@+id/btnB"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/strut"
+        android:layout_alignParentRight="true"
+        android:text="@string/btnB" />
+
+    <Button
+        android:id="@+id/btnC"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/btnA"
+        android:text="@string/btnC" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/btnC" >
+
+        <View
+            android:id="@+id/strut2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:id="@+id/btnD"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignRight="@id/strut2"
+            android:text="@string/btnD" />
+
+        <Button
+            android:id="@+id/btnE"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/strut2"
+            android:layout_alignParentRight="true"
+            android:text="@string/btnD" />
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/relativeLayout1" >
+
+        <View
+            android:id="@+id/strut3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:id="@+id/btnF"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignRight="@id/strut3"
+            android:text="@string/btnF" />
+        
+        <Button
+	        android:id="@+id/btnG"
+	        android:layout_width="wrap_content"
+	        android:layout_height="fill_parent"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@id/btnF"
+	        android:layout_toLeftOf="@+id/btnH"
+	        android:text="@string/btnG" />
+
+        <Button
+            android:id="@id/btnH"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_alignLeft="@id/strut3"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/btnI"
+            android:text="@string/btnH" />
+        
+        <Button
+	        android:id="@id/btnI"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentBottom="true"
+	        android:layout_toRightOf="@id/btnG"
+	        android:text="@string/btnI" />
+    </RelativeLayout>
+
+</RelativeLayout>
