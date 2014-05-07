@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AndroidManifest</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="texto">Texto de ejemplo</string>
+    <string name="texto_land">Texto de ejemplo en landscape</string>
+    <string name="texto_w800">Texto de ejemplo en ancho mayor a 800dp</string>
+
+</resources>
