@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 
 public class ToDoListFragment extends ListFragment {
 	public final static String ITEMS_ARRAY = "ITEMS_ARRAY";
-	
+
 	private ArrayAdapter<String> aa;
 	private ArrayList<String> todoItems;
 
@@ -29,21 +29,21 @@ public class ToDoListFragment extends ListFragment {
 		setListAdapter(aa);
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
-	
+
 	public void addItem(String txt) {
 		todoItems.add(0, txt);
 		aa.notifyDataSetChanged();
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle inState) {
-        super.onActivityCreated(inState);
-        
-        if (inState != null) {    		
+		super.onActivityCreated(inState);
+
+		if (inState != null) {
 			// A–adir a la lista
 			todoItems.addAll(inState.getStringArrayList(ITEMS_ARRAY));
 			aa.notifyDataSetChanged();
-        }
+		}
 	}
 
 	@Override
