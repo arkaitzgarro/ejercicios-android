@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Downloads</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="start">Iniciar descarga</string>
+    <string name="startJSON">Descargar JSON</string>
+    <string name="fileName">Nombre</string>
+    <string name="fileSize">Tamaño (Bytes)</string>
+    <string name="fileStatus">Estado</string>
+    <string name="uri">http://www.arkaitzgarro.com/android/photos.json</string>
+
+</resources>
