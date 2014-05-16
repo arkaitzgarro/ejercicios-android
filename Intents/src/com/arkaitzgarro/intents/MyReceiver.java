@@ -18,29 +18,30 @@ public class MyReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context ctx, Intent data) {
 		Log.i("RECEIVER", data.getAction());
+		String action = data.getAction();
 		Bundle extras = data.getExtras();
 
 		if (extras != null) {
-			if (data.getAction().equals(Intent.ACTION_AIRPLANE_MODE_CHANGED)) {
+			if (action.equals(Intent.ACTION_AIRPLANE_MODE_CHANGED)) {
 				String state = data.getStringExtra("state");
 
 				Log.i("RECEIVER", "ACTION_AIRPLANE_MODE_CHANGED");
 				Log.i("RECEIVER", "STATUS: " + isAirplaneModeOn(ctx));
-			} else if (data.getAction().equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {
+			} else if (action.equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {
 				String state = data.getStringExtra(TelephonyManager.EXTRA_STATE);
 				String number = data.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
 
 				Log.i("RECEIVER", TelephonyManager.ACTION_PHONE_STATE_CHANGED);
-				Log.i("RECEIVER", "STATUS: " + extras.get(TelephonyManager.EXTRA_STATE));
+				Log.i("RECEIVER", "STATUS: " + state);
 
 				if (TelephonyManager.EXTRA_STATE_RINGING.equals(state)) {
 					Log.i("RECEIVER", "INCOMING NUMBER: " + number);
 				}
-			} else if (data.getAction().equals("android.provider.Telephony.SMS_RECEIVED")) {
+			} else if (action.equals("android.provider.Telephony.SMS_RECEIVED")) {
 				Log.i("RECEIVER", extras.toString());
 
 				readSMS(extras);
-			} else if (data.getAction().equals("android.intent.action.SERVICE_STATE")) {			
+			} else if (action.equals("android.intent.action.SERVICE_STATE")) {			
 				int state = data.getExtras().getInt("state");
 				Log.i("RECEIVER", "State: " + state);
 				
@@ -51,7 +52,7 @@ public class MyReceiver extends BroadcastReceiver {
 				} else {
 					Log.i("RECEIVER", "State: CONNECTED");
 				}
-			} else if(data.getAction().equals("android.net.conn.CONNECTIVITY_CHANGE")) {
+			} else if(action.equals("android.net.conn.CONNECTIVITY_CHANGE")) {
 				ConnectivityManager connMgr = (ConnectivityManager) ctx
 		                .getSystemService(Context.CONNECTIVITY_SERVICE);
 				
