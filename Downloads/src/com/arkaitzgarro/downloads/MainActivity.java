@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
 				Request request = new Request(uri);
 				request.setNotificationVisibility(Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 				request.setDestinationInExternalFilesDir(MainActivity.this,
-						Environment.DIRECTORY_DOWNLOADS, "icon_templates.zip");
+						Environment.DIRECTORY_DOWNLOADS, uri.getLastPathSegment());
 				myReference = downloadManager.enqueue(request);
 			}
 		});
@@ -83,7 +83,10 @@ public class MainActivity extends Activity {
 				Log.d("DOWNLOADS", "downloadComplete()");
 				long reference = intent.getLongExtra(
 						DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-				getDownloadInfo(reference);
+				
+				if(reference == myReference){
+					getDownloadInfo(reference);
+				}
 			}
 		};
 		registerReceiver(downloadComplete, new IntentFilter(
