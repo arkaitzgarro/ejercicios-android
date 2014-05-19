@@ -37,7 +37,14 @@ public class PreferencesActivity extends Activity implements OnSharedPreferenceC
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 		if(key == getResources().getString(R.string.PREF_AUTO_UPDATE)) {
-			Log.d("PREFERENCES", String.valueOf(prefs.getBoolean(key, true)));
+			boolean autoRefresh = prefs.getBoolean(key, true);
+			Log.d("PREFERENCES", String.valueOf(autoRefresh));
+			
+			if(autoRefresh) {
+				// Start
+			} else {
+				// Pause
+			}
 		} else {
 			Log.d("PREFERENCES", prefs.getString(key, "60"));
 		}
