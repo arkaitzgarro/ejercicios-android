@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/category_network" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/PREF_AUTO_UPDATE"
+            android:summary="@string/auto_update_desc"
+            android:title="@string/auto_update_prompt" />
+
+        <ListPreference
+            android:defaultValue="60"
+            android:dependency="@string/PREF_AUTO_UPDATE"
+            android:dialogTitle="Refresh frequency"
+            android:entries="@array/update_freq_options"
+            android:entryValues="@array/update_freq_values"
+            android:key="@string/PREF_UPDATE_FREQ"
+            android:summary="@string/update_freq_desc"
+            android:title="@string/update_freq_prompt" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/category_filter" >
+        <ListPreference
+            android:defaultValue="3"
+            android:dialogTitle="Magnitude"
+            android:entries="@array/magnitude_options"
+            android:entryValues="@array/magnitude"
+            android:key="@string/PREF_MIN_MAG"
+            android:summary="@string/min_quake_mag_desc"
+            android:title="@string/min_quake_mag_prompt" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/category_network_preferences" >
+        <Preference
+            android:summary="@string/prefs_network_desc"
+            android:title="@string/prefs_network" >
+            <intent android:action="android.settings.WIRELESS_SETTINGS" />
+        </Preference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

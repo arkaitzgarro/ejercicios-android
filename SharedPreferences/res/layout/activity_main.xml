@@ -1,0 +1,93 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_horizontal_margin"
+    tools:context="com.arkaitzgarro.sharedpreferences.MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <TextView
+        android:id="@+id/autoRefreshView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/auto_refresh_label" />
+
+    <TextView
+        android:id="@+id/intervalView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/autoRefreshView"
+        android:layout_below="@+id/autoRefreshView"
+        android:text="@string/interval_label" />
+
+    <TextView
+        android:id="@+id/autoRefreshValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/intervalView"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:id="@+id/intervalValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/intervalView"
+        android:layout_alignBottom="@+id/intervalView"
+        android:layout_alignLeft="@+id/autoRefreshValue" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/intervalView"
+        android:layout_below="@+id/intervalValue"
+        android:layout_marginTop="30dp"
+        android:text="@string/preferences_framework"
+        android:textAllCaps="true"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/pfAutoRefreshView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:text="@string/auto_refresh_label" />
+
+    <TextView
+        android:id="@+id/pfIntervalView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/pfAutoRefreshView"
+        android:layout_below="@+id/pfAutoRefreshView"
+        android:text="@string/interval_label" />
+
+    <TextView
+        android:id="@+id/pfAutoRefreshValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/pfIntervalView"
+        android:layout_alignRight="@+id/intervalValue"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/pfIntervalValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/pfIntervalView"
+        android:layout_alignBottom="@+id/pfIntervalView"
+        android:layout_alignLeft="@+id/pfAutoRefreshValue"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/pfMagnitudeValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/pfIntervalView"
+        android:layout_below="@+id/pfIntervalView"
+        android:text="@string/magnitude_label" />
+
+</RelativeLayout>
