@@ -59,9 +59,9 @@ public class MainActivity extends Activity {
 		intervalValue.setText(freqValues[intervalIdx]);
 		
 		boolean pfAutoUpdateChecked = pf.getBoolean(
-				SettingsActivity.PREF_AUTO_UPDATE, false);
+				getResources().getString(R.string.PREF_AUTO_UPDATE), false);
 		int pfInterval = Integer.parseInt(pf.getString(
-				SettingsActivity.PREF_UPDATE_FREQ_INDEX, "2"));
+				getResources().getString(R.string.PREF_UPDATE_FREQ), "2"));
 		
 		pfAutoRefreshValue.setText((pfAutoUpdateChecked)?"On":"Off");
 //		pfIntervalValue.setText(pfInterval);
