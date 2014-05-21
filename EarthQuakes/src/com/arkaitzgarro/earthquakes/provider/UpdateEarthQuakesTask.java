@@ -58,18 +58,18 @@ public class UpdateEarthQuakesTask extends AsyncTask<String, Void, Void> {
 					json = new JSONObject(responseStrBuilder.toString());
 					JSONArray earthquakes = json.getJSONArray("features");
 					
-					for (int i = 0; i < earthquakes.length(); i++) {
+					for (int i = earthquakes.length()-1; i >= 0; i--) {
 						new ProcessEarthQuakeTask(mContext).execute(earthquakes.getJSONObject(i));
 					}
 				} catch (JSONException e) {
-					Log.e("EARTHQUAKE",
+					Log.e(TAG,
 							"Error al leer el fichero JSON: " + e.getMessage());
 				}
 			}
 		} catch (MalformedURLException e) {
-			Log.d("EARTHQUAKE", "Malformed URL Exception.", e);
+			Log.d(TAG, "Malformed URL Exception.", e);
 		} catch (IOException e) {
-			Log.d("EARTHQUAKE", "IO Exception.", e);
+			Log.d(TAG, "IO Exception.", e);
 		}
 				
 		return null;

@@ -3,19 +3,23 @@ package com.arkaitzgarro.earthquakes.fragment;
 import java.util.ArrayList;
 
 import android.app.ListFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.arkaitzgarro.earthquakes.R;
+import com.arkaitzgarro.earthquakes.activitiy.DetaillActivity;
 import com.arkaitzgarro.earthquakes.model.EarthQuake;
 import com.arkaitzgarro.earthquakes.provider.EarthQuakeDB;
 import com.arkaitzgarro.earthquakes.provider.UpdateEarthQuakesTask;
 
 public class EarthQuakeList extends ListFragment {
 	public final static String ITEMS_ARRAY = "ITEMS_ARRAY";
+	public final static String ID = "_id";
 
 	private static final String TAG = "EARTHQUAKE";
 
@@ -29,15 +33,6 @@ public class EarthQuakeList extends ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
-		db = EarthQuakeDB.getDB(inflater.getContext());
-		earthquakes = db.getEarthquakesByMagnitude(0);
-
-		// Create the array adapter to bind the array to the listview
-		aa = new EarthQuakeArrayAdapter(inflater.getContext(), earthquakes);
-
-		setListAdapter(aa);
-		
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
@@ -53,9 +48,35 @@ public class EarthQuakeList extends ListFragment {
 			throw new ClassCastException(earthquakeActivity.toString()
 					+ " must implement UpdateQuakesTask.IUpdateQuakes");
 		}
-
+		
+		earthquakes = new ArrayList<EarthQuake>();
+		db = EarthQuakeDB.getDB(getActivity());
+		
+		earthquakes = db.getEarthquakesByMagnitude(0);
 		refreshEarthquakes();
+		
+//		if(null == savedInstanceState) {
+//			earthquakes = db.getEarthquakesByMagnitude(0);
+//			refreshEarthquakes();
+//		} else {
+//			earthquakes.addAll((ArrayList<EarthQuake>)savedInstanceState.getSerializable(ITEMS_ARRAY));
+//		}
+		
+		// Create the array adapter to bind the array to the listview
+		aa = new EarthQuakeArrayAdapter(getActivity(), earthquakes);
+
+		setListAdapter(aa);
 	}
+	
+	@Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        
+        Intent detail = new Intent(getActivity(), DetaillActivity.class);
+        detail.putExtra(ID, earthquakes.get(position).getId());
+        
+        startActivity(detail);
+    }
 
 	public void refreshEarthquakes() {
 		new UpdateEarthQuakesTask(earthquakeActivity)
@@ -64,28 +85,20 @@ public class EarthQuakeList extends ListFragment {
 	
 	public void addNewQuake(EarthQuake q) {
 		Log.d(TAG, "RECEIVED: " + q);
-		db.insertEarthQuake(q);
-		earthquakes.add(q);
 		
-		aa.notifyDataSetChanged();
+		long id = db.insertEarthQuake(q);
+		if(id > 0) {
+			q.setId(id);
+			earthquakes.add(0, q);
+			aa.notifyDataSetChanged();
+		}		
 	}
 
-	// @Override
-	// public void onActivityCreated(Bundle inState) {
-	// super.onActivityCreated(inState);
-	//
-	// if (inState != null) {
-	// // A–adir a la lista
-	// todoItems.addAll(inState.getStringArrayList(ITEMS_ARRAY));
-	// aa.notifyDataSetChanged();
-	// }
-	// }
-	//
-	// @Override
-	// public void onSaveInstanceState(Bundle outState) {
-	// outState.putStringArrayList(ITEMS_ARRAY, todoItems);
-	//
-	// super.onSaveInstanceState(outState);
-	// }
+//	@Override
+//	public void onSaveInstanceState(Bundle outState) {
+//		outState.putSerializable(ITEMS_ARRAY, earthquakes);
+//
+//		super.onSaveInstanceState(outState);
+//	}
 
 }

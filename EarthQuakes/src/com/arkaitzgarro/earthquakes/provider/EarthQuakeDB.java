@@ -120,6 +120,7 @@ public class EarthQuakeDB {
 
 		while (c.moveToNext()) {
 			EarthQuake q = new EarthQuake();
+			
 			q.setId(c.getLong(idIdx));
 			q.setIdStr(c.getString(idStrIdx));
 			q.setPlace(c.getString(placeIdx));
