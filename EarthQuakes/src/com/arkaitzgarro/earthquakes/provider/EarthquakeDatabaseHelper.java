@@ -29,10 +29,10 @@ class EarthquakeDatabaseHelper extends SQLiteOpenHelper {
 		public static final String KEY_UPDATED_AT = "updated_at";
 	}
 
-	private static final String DATABASE_CREATE = "create table "
-			+ EARTHQUAKE_TABLE + " (" + Columns._ID
-			+ " integer primary key autoincrement, " + Columns.KEY_ID_STR
-			+ " TEXT UNIQUE, " + Columns.KEY_TIME + " INTEGER, " + Columns.KEY_PLACE
+	private static final String DATABASE_CREATE = "create table " + EARTHQUAKE_TABLE
+			+ " (" + Columns._ID + " integer primary key autoincrement, "
+			+ Columns.KEY_ID_STR + " TEXT UNIQUE, "
+			+ Columns.KEY_TIME + " INTEGER, " + Columns.KEY_PLACE
 			+ " TEXT, " + Columns.KEY_LOCATION_LAT + " FLOAT, " + Columns.KEY_LOCATION_LNG
 			+ " FLOAT, " + Columns.KEY_MAGNITUDE + " FLOAT, " + Columns.KEY_URL + " TEXT,"
 			+ Columns.KEY_CREATED_AT + " INTEGER, " + Columns.KEY_UPDATED_AT + " INTEGER"

@@ -19,6 +19,7 @@ public class EarthQuakeDB {
 
 	public static final String[] KEYS_ALL = {
 			EarthquakeDatabaseHelper.Columns._ID,
+			EarthquakeDatabaseHelper.Columns.KEY_ID_STR,
 			EarthquakeDatabaseHelper.Columns.KEY_PLACE,
 			EarthquakeDatabaseHelper.Columns.KEY_TIME,
 			EarthquakeDatabaseHelper.Columns.KEY_LOCATION_LAT,
@@ -98,7 +99,7 @@ public class EarthQuakeDB {
 
 		String whereArgs[] = { String.valueOf(magnitude) };
 		Cursor c = this.query(KEYS_ALL,
-				EarthquakeDatabaseHelper.Columns.KEY_MAGNITUDE + " > ?",
+				EarthquakeDatabaseHelper.Columns.KEY_MAGNITUDE + " >= ?",
 				whereArgs, null, null,
 				EarthquakeDatabaseHelper.Columns.KEY_TIME + " DESC");
 

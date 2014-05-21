@@ -1,33 +1,34 @@
 package com.arkaitzgarro.earthquakes.activitiy;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.arkaitzgarro.earthquakes.R;
+import com.arkaitzgarro.earthquakes.fragment.EarthQuakeList;
 import com.arkaitzgarro.earthquakes.model.EarthQuake;
-import com.arkaitzgarro.earthquakes.provider.EarthQuakeDB;
+import com.arkaitzgarro.earthquakes.provider.UpdateEarthQuakesTask;
 
-public class ListActivity extends Activity {
+public class MainActivity extends Activity implements
+		UpdateEarthQuakesTask.IUpdateQuakes {
 
-	private EarthQuakeDB db;
+	EarthQuakeList earthQuakeList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list);
 
-		db = EarthQuakeDB.getDB(this);
-
-		EarthQuake q = null;
-		q = new EarthQuake("nc72224581", "6km NW of The Geysers, California",
-				Long.valueOf("1400577895049"), 3.5, 40.223567, 5.234566, "http://url/");
-		Log.d("EARTHQUAKE", String.valueOf(db.insertEarthQuake(q)));
-		q = new EarthQuake("nc72224581", "6km NW of The Geysers, California",
-				Long.valueOf("1400577895049"), 3.5, 40.223567, 5.234566, "http://url/");
-		Log.d("EARTHQUAKE", String.valueOf(db.insertEarthQuake(q)));
+		if (savedInstanceState == null) {
+			earthQuakeList = new EarthQuakeList();
+			// Get references to the Fragments
+			FragmentTransaction fragmentTransaction = getFragmentManager()
+					.beginTransaction();
+			fragmentTransaction.add(R.id.container, earthQuakeList, "list");
+			fragmentTransaction.commit();
+		}
 	}
 
 	@Override
@@ -45,6 +46,11 @@ public class ListActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void addQuake(EarthQuake q) {
+		earthQuakeList.addNewQuake(q);
 	}
 
 }

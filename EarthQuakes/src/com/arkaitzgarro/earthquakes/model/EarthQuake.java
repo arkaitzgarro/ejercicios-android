@@ -1,5 +1,6 @@
 package com.arkaitzgarro.earthquakes.model;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,13 +8,14 @@ import java.util.Locale;
 
 import android.location.Location;
 
-public class EarthQuake {
+public class EarthQuake implements Serializable {
+
+	private static final long serialVersionUID = -8534022271629673915L;
 
 	private long _id;
 	private String idStr;
 	private String place;
 	private Date time;
-	// private String detail;
 	private double magnitude;
 	private Location location;
 	private String url;
@@ -31,7 +33,6 @@ public class EarthQuake {
 		this.idStr = idStr;
 		this.place = place;
 		this.time = new Date(timestamp);
-		// this.detail = detail;
 		this.magnitude = magnitude;
 		this.url = url;
 
@@ -67,18 +68,15 @@ public class EarthQuake {
 	public Date getTime() {
 		return time;
 	}
+	
+	public String getTimeFormated() {
+		SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss aaa", Locale.ENGLISH);
+		return sdf.format(time);
+	}
 
 	public void setTime(Date time) {
 		this.time = time;
 	}
-
-	// public String getDetail() {
-	// return detail;
-	// }
-	//
-	// public void setDetail(String detail) {
-	// this.detail = detail;
-	// }
 
 	public double getMagnitude() {
 		return magnitude;
