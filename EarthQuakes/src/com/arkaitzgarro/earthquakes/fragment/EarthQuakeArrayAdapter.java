@@ -23,20 +23,35 @@ public class EarthQuakeArrayAdapter extends ArrayAdapter<EarthQuake> {
 		this.values = values;
 	}
 
+	static class ViewHolder {
+		public TextView magnitude;
+		public TextView place;
+		public TextView time;
+	}
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
-		View rowView = inflater.inflate(R.layout.earthquake_row_layout, parent, false);
-		
-		TextView magnitude = (TextView) rowView.findViewById(R.id.magnitude);
-		TextView place = (TextView) rowView.findViewById(R.id.place);
-		TextView time = (TextView) rowView.findViewById(R.id.time);
-		
-		magnitude.setText(String.valueOf(values.get(position).getMagnitude()));
-		place.setText(values.get(position).getPlace());
-		time.setText(values.get(position).getTimeFormated());
+
+		View rowView = convertView;
+		if (rowView == null) {
+			LayoutInflater inflater = (LayoutInflater) context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			rowView = inflater.inflate(R.layout.earthquake_row_layout, null);
+
+			// Configure view holder
+			ViewHolder viewHolder = new ViewHolder();
+			viewHolder.magnitude = (TextView) rowView.findViewById(R.id.magnitude);
+			viewHolder.place = (TextView) rowView.findViewById(R.id.place);
+			viewHolder.time = (TextView) rowView.findViewById(R.id.time);
+			
+			rowView.setTag(viewHolder);
+		}
+
+		// Fill data
+		ViewHolder holder = (ViewHolder) rowView.getTag();
+		holder.magnitude.setText(String.valueOf(values.get(position).getMagnitude()));
+		holder.place.setText(String.valueOf(values.get(position).getPlace()));
+		holder.time.setText(String.valueOf(values.get(position).getTimeFormated()));
 
 		return rowView;
 	}
