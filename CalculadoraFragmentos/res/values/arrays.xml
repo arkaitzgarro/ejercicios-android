@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="numbers">
+        <item>@id/btnN0</item>
+        <item>@id/btnN1</item>
+        <item>@id/btnN2</item>
+        <item>@id/btnN3</item>
+        <item>@id/btnN4</item>
+        <item>@id/btnN5</item>
+        <item>@id/btnN6</item>
+        <item>@id/btnN7</item>
+        <item>@id/btnN8</item>
+        <item>@id/btnN9</item>
+    </array>
+    
+    <array name="ops">
+        <item>@id/btnAdd</item>
+        <item>@id/btnSub</item>
+        <item>@id/btnDiv</item>
+        <item>@id/btnMul</item>
+        <item>@id/btnDec</item>
+        <item>@id/btnEq</item>
+    </array>
+    
+</resources>

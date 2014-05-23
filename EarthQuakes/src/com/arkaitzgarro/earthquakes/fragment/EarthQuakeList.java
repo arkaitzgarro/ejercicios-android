@@ -16,7 +16,7 @@ import android.widget.ListView;
 import com.arkaitzgarro.earthquakes.R;
 import com.arkaitzgarro.earthquakes.activitiy.DetaillActivity;
 import com.arkaitzgarro.earthquakes.model.EarthQuake;
-import com.arkaitzgarro.earthquakes.provider.EarthQuakeDB;
+//import com.arkaitzgarro.earthquakes.provider.EarthQuakeDB;
 import com.arkaitzgarro.earthquakes.provider.UpdateEarthQuakesTask;
 
 public class EarthQuakeList extends ListFragment {
@@ -25,7 +25,7 @@ public class EarthQuakeList extends ListFragment {
 
 	private static final String TAG = "EARTHQUAKE";
 
-	private EarthQuakeDB db;
+//	private EarthQuakeDB db;
 
 	private EarthQuakeArrayAdapter aa;
 	private ArrayList<EarthQuake> earthquakes;
@@ -47,6 +47,12 @@ public class EarthQuakeList extends ListFragment {
 		
 		prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		minMag = Double.valueOf(prefs.getString(getResources().getString(R.string.PREF_MIN_MAG), "0"));
+		
+//		db = EarthQuakeDB.getDB(getActivity());
+		earthquakes = new ArrayList<EarthQuake>();
+		// Create the array adapter to bind the array to the listview
+		aa = new EarthQuakeArrayAdapter(getActivity(), earthquakes);
+		setListAdapter(aa);
 
 		try {
 			earthquakeActivity = (UpdateEarthQuakesTask.IUpdateQuakes) getActivity();
@@ -66,12 +72,9 @@ public class EarthQuakeList extends ListFragment {
 		
 		minMag = Double.valueOf(prefs.getString(getResources().getString(R.string.PREF_MIN_MAG), "0"));
 		
-		db = EarthQuakeDB.getDB(getActivity());		
-		earthquakes = db.getEarthquakesByMagnitude(minMag);
-
-		// Create the array adapter to bind the array to the listview
-		aa = new EarthQuakeArrayAdapter(getActivity(), earthquakes);
-		setListAdapter(aa);
+		earthquakes.clear();
+//		earthquakes.addAll(db.getEarthquakesByMagnitude(minMag));
+		aa.notifyDataSetChanged();
 	}
 	
 	@Override
