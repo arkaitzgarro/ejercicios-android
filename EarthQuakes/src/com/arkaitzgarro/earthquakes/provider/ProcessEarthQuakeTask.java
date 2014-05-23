@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -16,10 +17,13 @@ public class ProcessEarthQuakeTask extends AsyncTask<JSONObject, Void, EarthQuak
 
 	private static final String TAG = "EARTHQUAKE";
 
+	private EarthQuakeDB db;
+	
 	private IUpdateQuakes mContext;
 
 	public ProcessEarthQuakeTask(IUpdateQuakes context) {
 		mContext = context;
+		db = EarthQuakeDB.getDB((Context)mContext);
 	}
 
 	@Override
@@ -39,6 +43,11 @@ public class ProcessEarthQuakeTask extends AsyncTask<JSONObject, Void, EarthQuak
 			q.setUrl(p.getString("url"));
 			q.setLongitude(l.getDouble(0));
 			q.setLatitude(l.getDouble(1));
+			
+			long id = db.insertEarthQuake(q);
+			if(id != -1) {
+				q.setId(id);
+			}
 
 			return q;
 

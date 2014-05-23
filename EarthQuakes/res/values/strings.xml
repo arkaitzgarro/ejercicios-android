@@ -6,6 +6,23 @@
     <string name="action_settings">Settings</string>
     <string name="action_refresh">Refresh</string>
     <string name="quake_feed">http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson</string>
-    <string name="title_activity_detaill">DetaillActivity</string>
+    <string name="title_activity_detaill">EartQuake detail</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="PREF_AUTO_UPDATE">PREF_AUTO_UPDATE</string>
+    <string name="PREF_UPDATE_FREQ">PREF_UPDATE_FREQ_INDEX</string>
+    <string name="PREF_MIN_MAG">PREF_MIN_MAG</string>
+    <string name="auto_update_prompt">Auto Update?</string>
+    <string name="auto_update_desc">Select to turn on automatic updating</string>
+    <string name="update_freq_prompt">Update Frequency</string>
+    <string name="update_freq_desc">Frequency at which to refresh earthquake list</string>
+    <string name="min_quake_mag_prompt">Minimum Quake Magnitude</string>
+    <string name="min_quake_mag_desc">Select the minimum magnitude earthquake to report</string>
+    <string name="category_network">Data update</string>
+    <string name="category_filter">Filter earthquakes</string>
+    <string name="magnitude_label">Min magnitude</string>
+    <string name="preferences_framework">Preferences Framework</string>
+    <string name="prefs_network">Network preferences</string>
+    <string name="prefs_network_desc">Show settings to allow configuration of Wi-Fi.</string>
+    <string name="category_network_preferences">Network</string>
 
 </resources>

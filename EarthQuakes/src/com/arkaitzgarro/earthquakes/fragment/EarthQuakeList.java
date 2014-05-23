@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import android.app.ListFragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,9 @@ public class EarthQuakeList extends ListFragment {
 
 	private EarthQuakeArrayAdapter aa;
 	private ArrayList<EarthQuake> earthquakes;
+	
+	private SharedPreferences prefs;
+	private double minMag;
 
 	private UpdateEarthQuakesTask.IUpdateQuakes earthquakeActivity;
 
@@ -39,6 +44,9 @@ public class EarthQuakeList extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		
+		prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		minMag = Double.valueOf(prefs.getString(getResources().getString(R.string.PREF_MIN_MAG), "0"));
 
 		try {
 			earthquakeActivity = (UpdateEarthQuakesTask.IUpdateQuakes) getActivity();
@@ -49,22 +57,20 @@ public class EarthQuakeList extends ListFragment {
 					+ " must implement UpdateQuakesTask.IUpdateQuakes");
 		}
 		
-		earthquakes = new ArrayList<EarthQuake>();
-		db = EarthQuakeDB.getDB(getActivity());
-		
-		earthquakes = db.getEarthquakesByMagnitude(0);
 		refreshEarthquakes();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
 		
-//		if(null == savedInstanceState) {
-//			earthquakes = db.getEarthquakesByMagnitude(0);
-//			refreshEarthquakes();
-//		} else {
-//			earthquakes.addAll((ArrayList<EarthQuake>)savedInstanceState.getSerializable(ITEMS_ARRAY));
-//		}
+		minMag = Double.valueOf(prefs.getString(getResources().getString(R.string.PREF_MIN_MAG), "0"));
 		
+		db = EarthQuakeDB.getDB(getActivity());		
+		earthquakes = db.getEarthquakesByMagnitude(minMag);
+
 		// Create the array adapter to bind the array to the listview
 		aa = new EarthQuakeArrayAdapter(getActivity(), earthquakes);
-
 		setListAdapter(aa);
 	}
 	
@@ -86,19 +92,12 @@ public class EarthQuakeList extends ListFragment {
 	public void addNewQuake(EarthQuake q) {
 		Log.d(TAG, "RECEIVED: " + q);
 		
-		long id = db.insertEarthQuake(q);
-		if(id > 0) {
-			q.setId(id);
+		
+		if(q.getId() > 0 && q.getMagnitude() >= minMag) {
 			earthquakes.add(0, q);
 			aa.notifyDataSetChanged();
+			Log.d(TAG, "ADDED: " + q);
 		}		
 	}
-
-//	@Override
-//	public void onSaveInstanceState(Bundle outState) {
-//		outState.putSerializable(ITEMS_ARRAY, earthquakes);
-//
-//		super.onSaveInstanceState(outState);
-//	}
 
 }

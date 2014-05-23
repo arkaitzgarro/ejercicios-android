@@ -29,6 +29,10 @@
             android:label="@string/title_activity_detaill"
             android:parentActivityName="com.arkaitzgarro.earthquakes.activitiy.MainActivity" >
         </activity>
+        <activity
+            android:name="com.arkaitzgarro.earthquakes.activitiy.SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
     </application>
 
 </manifest>

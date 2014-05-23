@@ -2,7 +2,9 @@ package com.arkaitzgarro.earthquakes.activitiy;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -13,6 +15,9 @@ import com.arkaitzgarro.earthquakes.provider.UpdateEarthQuakesTask;
 
 public class MainActivity extends Activity implements
 		UpdateEarthQuakesTask.IUpdateQuakes {
+	
+	private static final String TAG = "EARTHQUAKE";
+	private int ACTION_SETTINGS = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +44,20 @@ public class MainActivity extends Activity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			Intent i = new Intent(this, SettingsActivity.class);
+			startActivityForResult(i, ACTION_SETTINGS);
 			return true;
+		} else if(id == R.id.action_refresh) {
+			((EarthQuakeList)getFragmentManager().findFragmentByTag("list")).refreshEarthquakes();
 		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
 	public void addQuake(EarthQuake q) {
+		Log.d(TAG, "CONTEXT " + this);
+		
 		((EarthQuakeList)getFragmentManager().findFragmentByTag("list")).addNewQuake(q);
 	}
 
