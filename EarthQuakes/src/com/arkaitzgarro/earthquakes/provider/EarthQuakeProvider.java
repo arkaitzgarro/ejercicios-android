@@ -54,9 +54,7 @@ public class EarthQuakeProvider extends ContentProvider {
 
 	@Override
 	public boolean onCreate() {
-		Context context = getContext();
-
-		dbHelper = new EarthquakeDatabaseHelper(context,
+		dbHelper = new EarthquakeDatabaseHelper(getContext(),
 				EarthquakeDatabaseHelper.DATABASE_NAME, null,
 				EarthquakeDatabaseHelper.DATABASE_VERSION);
 
@@ -105,19 +103,11 @@ public class EarthQuakeProvider extends ContentProvider {
 		// Apply the query to the underlying database.
 		Cursor c = qb.query(database, projection, selection, selectionArgs,
 				null, null, orderBy);
-
-		// Register the contexts ContentResolver to be notified if
-		// the cursor result set changes.
+		
 		c.setNotificationUri(getContext().getContentResolver(), uri);
 
 		// Return a cursor to the query result.
 		return c;
-	}
-
-	@Override
-	public int delete(Uri arg0, String arg1, String[] arg2) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
@@ -143,6 +133,12 @@ public class EarthQuakeProvider extends ContentProvider {
 		}
 
 		return null;
+	}
+	
+	@Override
+	public int delete(Uri arg0, String arg1, String[] arg2) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override

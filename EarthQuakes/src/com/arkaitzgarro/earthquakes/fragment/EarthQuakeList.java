@@ -16,10 +16,9 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import com.arkaitzgarro.earthquakes.R;
-import com.arkaitzgarro.earthquakes.activitiy.DetaillActivity;
+import com.arkaitzgarro.earthquakes.activitiy.DetailActivity;
 import com.arkaitzgarro.earthquakes.provider.EarthQuakeProvider;
 import com.arkaitzgarro.earthquakes.provider.UpdateEarthQuakesTask;
-
 
 public class EarthQuakeList extends ListFragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {
@@ -27,7 +26,13 @@ public class EarthQuakeList extends ListFragment implements
 	public final static String ID = "_id";
 
 	private static final String TAG = "EARTHQUAKE";
-	private final int LOADER_ID = 1;
+
+	// The loader's unique id. Loader ids are specific to the Activity or
+	// Fragment in which they reside.
+	private static final int LOADER_ID = 1;
+
+	// The callbacks through which we will interact with the LoaderManager.
+	private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
 
 	private String[] from = { EarthQuakeProvider.Columns.KEY_TIME,
 			EarthQuakeProvider.Columns.KEY_MAGNITUDE,
@@ -43,10 +48,13 @@ public class EarthQuakeList extends ListFragment implements
 		adapter = new SimpleCursorAdapter(getActivity(),
 				R.layout.earthquake_row_layout, null, from, to, 0);
 
-//		adapter.setViewBinder(new EarthquakeViewBinder());
+		adapter.setViewBinder(new EarthquakeViewBinder());
 		setListAdapter(adapter);
-
-//		getLoaderManager().initLoader(LOADER_ID, null, this);
+		
+		mCallbacks = this;
+		
+		LoaderManager lm = getLoaderManager();
+	    lm.initLoader(LOADER_ID, null, mCallbacks);
 
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
@@ -55,14 +63,21 @@ public class EarthQuakeList extends ListFragment implements
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		refreshEarthquakes();
+//		refreshEarthquakes();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+		getLoaderManager().restartLoader(LOADER_ID, null, mCallbacks);
 	}
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 
-		Intent detail = new Intent(getActivity(), DetaillActivity.class);
+		Intent detail = new Intent(getActivity(), DetailActivity.class);
 		detail.putExtra(ID, id);
 
 		startActivity(detail);
@@ -75,16 +90,17 @@ public class EarthQuakeList extends ListFragment implements
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		double minMag = Double.valueOf(prefs.getString(
-				getResources().getString(R.string.PREF_MIN_MAG), "0"));
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(getActivity());
+		String minMag = prefs.getString(
+				getResources().getString(R.string.PREF_MIN_MAG), "0");
 
 		String where = EarthQuakeProvider.Columns.KEY_MAGNITUDE + " >= ? ";
-		String[] whereArgs = { String.valueOf(String.valueOf(minMag)) };
+		String[] whereArgs = { minMag };
+		String order = EarthQuakeProvider.Columns.KEY_TIME + " DESC";
 
 		CursorLoader loader = new CursorLoader(getActivity(),
-				EarthQuakeProvider.CONTENT_URI, from, where, whereArgs,
-				null);
+				EarthQuakeProvider.CONTENT_URI, from, where, whereArgs, order);
 
 		return loader;
 	}

@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.arkaitzgarro.earthquakes.activitiy.DetaillActivity"
+            android:name="com.arkaitzgarro.earthquakes.activitiy.DetailActivity"
             android:label="@string/title_activity_detaill"
             android:parentActivityName="com.arkaitzgarro.earthquakes.activitiy.MainActivity" >
         </activity>
