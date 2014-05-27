@@ -1,48 +1,32 @@
 package com.arkaitzgarro.earthquakes.activitiy;
 
 import android.app.Activity;
-import android.content.ContentResolver;
+import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.arkaitzgarro.earthquakes.R;
 import com.arkaitzgarro.earthquakes.fragment.EarthQuakeList;
-import com.arkaitzgarro.earthquakes.model.EarthQuake;
-import com.arkaitzgarro.earthquakes.provider.EarthQuakeProvider;
-import com.arkaitzgarro.earthquakes.provider.UpdateEarthQuakesTask;
 
-public class MainActivity extends Activity implements
-		UpdateEarthQuakesTask.IUpdateQuakes {
+public class MainActivity extends Activity {
 
 	private static final String TAG = "EARTHQUAKE";
-	private int ACTION_SETTINGS = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list);
 
-		ContentResolver cr = getContentResolver();
-
-		Cursor c = cr.query(EarthQuakeProvider.CONTENT_URI,
-				EarthQuakeProvider.KEYS_ALL, null, null, null);
-		
-		while(c.moveToNext()) {
-			Log.d(TAG, c.getString(c.getColumnIndex(EarthQuakeProvider.Columns.KEY_PLACE)));
+		if (savedInstanceState == null) {
+			// Get references to the Fragments
+			FragmentTransaction fragmentTransaction = getFragmentManager()
+					.beginTransaction();
+			fragmentTransaction.add(R.id.container, new EarthQuakeList(),
+					"list");
+			fragmentTransaction.commit();
 		}
-
-		// if (savedInstanceState == null) {
-		// // Get references to the Fragments
-		// FragmentTransaction fragmentTransaction = getFragmentManager()
-		// .beginTransaction();
-		// fragmentTransaction.add(R.id.container, new EarthQuakeList(),
-		// "list");
-		// fragmentTransaction.commit();
-		// }
 	}
 
 	@Override
@@ -57,7 +41,7 @@ public class MainActivity extends Activity implements
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			Intent i = new Intent(this, SettingsActivity.class);
-			startActivityForResult(i, ACTION_SETTINGS);
+			startActivity(i);
 			return true;
 		} else if (id == R.id.action_refresh) {
 			((EarthQuakeList) getFragmentManager().findFragmentByTag("list"))
@@ -65,14 +49,6 @@ public class MainActivity extends Activity implements
 		}
 
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	public void addQuake(EarthQuake q) {
-		Log.d(TAG, "CONTEXT " + this);
-
-		((EarthQuakeList) getFragmentManager().findFragmentByTag("list"))
-				.addNewQuake(q);
 	}
 
 }

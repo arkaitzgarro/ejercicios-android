@@ -1,6 +1,7 @@
 package com.arkaitzgarro.earthquakes.provider;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
@@ -120,8 +121,27 @@ public class EarthQuakeProvider extends ContentProvider {
 	}
 
 	@Override
-	public Uri insert(Uri arg0, ContentValues arg1) {
-		// TODO Auto-generated method stub
+	public Uri insert(Uri uri, ContentValues values) {
+		SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+		long now = System.currentTimeMillis();
+
+		values.put(EarthquakeDatabaseHelper.Columns.KEY_CREATED_AT, now);
+		values.put(EarthquakeDatabaseHelper.Columns.KEY_UPDATED_AT, now);
+
+		long rowID = database.insert(EarthquakeDatabaseHelper.EARTHQUAKE_TABLE,
+				null, values);
+
+		if (rowID > -1) {
+			// Construct and return the URI of the newly inserted row.
+			Uri insertedId = ContentUris.withAppendedId(CONTENT_URI, rowID);
+
+			// Notify any observers of the change in the data set.
+			getContext().getContentResolver().notifyChange(insertedId, null);
+
+			return insertedId;
+		}
+
 		return null;
 	}
 

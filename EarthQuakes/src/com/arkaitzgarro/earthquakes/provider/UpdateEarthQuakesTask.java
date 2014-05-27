@@ -12,23 +12,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-
-import com.arkaitzgarro.earthquakes.model.EarthQuake;
 
 public class UpdateEarthQuakesTask extends AsyncTask<String, Void, Void> {
 
 	private static final String TAG = "EARTHQUAKE";
 
-	public static interface IUpdateQuakes {
-		public void addQuake(EarthQuake q);
-	}
+	private Context mContext;
 
-	private IUpdateQuakes mContext;
-
-	public UpdateEarthQuakesTask(IUpdateQuakes context) {
-		mContext = context;
+	public UpdateEarthQuakesTask(Context context) {
+		this.mContext = context;
 	}
 	
 	@Override

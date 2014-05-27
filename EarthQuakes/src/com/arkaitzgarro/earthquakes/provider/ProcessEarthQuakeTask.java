@@ -6,24 +6,25 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.arkaitzgarro.earthquakes.model.EarthQuake;
-import com.arkaitzgarro.earthquakes.provider.UpdateEarthQuakesTask.IUpdateQuakes;
 
 public class ProcessEarthQuakeTask extends AsyncTask<JSONObject, Void, EarthQuake> {
 
 	private static final String TAG = "EARTHQUAKE";
 
-	private EarthQuakeDB db;
+//	private EarthQuakeDB db;
 	
-	private IUpdateQuakes mContext;
+	private Context mContext;
 
-	public ProcessEarthQuakeTask(IUpdateQuakes context) {
+	public ProcessEarthQuakeTask(Context context) {
 		mContext = context;
-		db = EarthQuakeDB.getDB((Context)mContext);
+//		db = EarthQuakeDB.getDB((Context)mContext);
 	}
 
 	@Override
@@ -44,10 +45,7 @@ public class ProcessEarthQuakeTask extends AsyncTask<JSONObject, Void, EarthQuak
 			q.setLongitude(l.getDouble(0));
 			q.setLatitude(l.getDouble(1));
 			
-			long id = db.insertEarthQuake(q);
-			if(id != -1) {
-				q.setId(id);
-			}
+			this.insertEarthQuake(q);
 
 			return q;
 
@@ -57,9 +55,28 @@ public class ProcessEarthQuakeTask extends AsyncTask<JSONObject, Void, EarthQuak
 		
 		return null;
 	}
+	
+	private void insertEarthQuake(EarthQuake q) {
+		ContentResolver cr = mContext.getContentResolver();
+		ContentValues newValues = new ContentValues();
+
+		newValues.put(EarthQuakeProvider.Columns.KEY_TIME, q.getTime()
+				.getTime());
+		newValues
+				.put(EarthQuakeProvider.Columns.KEY_ID_STR, q.getIdStr());
+		newValues.put(EarthQuakeProvider.Columns.KEY_PLACE, q.getPlace());
+		newValues.put(EarthQuakeProvider.Columns.KEY_LOCATION_LAT, q
+				.getLocation().getLatitude());
+		newValues.put(EarthQuakeProvider.Columns.KEY_LOCATION_LNG, q
+				.getLocation().getLongitude());
+		newValues.put(EarthQuakeProvider.Columns.KEY_MAGNITUDE,
+				q.getMagnitude());
+		newValues.put(EarthQuakeProvider.Columns.KEY_URL, q.getUrl());
+		
+		cr.insert(EarthQuakeProvider.CONTENT_URI, newValues);
+	}
 
 	protected void onPostExecute(EarthQuake q) {
-		mContext.addQuake(q);
 		Log.d(TAG, "SENT: " + q);
 	}
 }
