@@ -24,5 +24,7 @@
     <string name="prefs_network">Network preferences</string>
     <string name="prefs_network_desc">Show settings to allow configuration of Wi-Fi.</string>
     <string name="category_network_preferences">Network</string>
+    <string name="earthquakes_updated">Earthquakes updated!</string>
+    <string name="title_activity_web_view">WebViewActivity</string>
 
 </resources>

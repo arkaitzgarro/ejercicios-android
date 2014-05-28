@@ -25,6 +25,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/detail_magnitude"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textStyle="bold" />
 
 </RelativeLayout>

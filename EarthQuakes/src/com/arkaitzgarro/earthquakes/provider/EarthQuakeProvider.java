@@ -8,6 +8,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
@@ -22,6 +23,8 @@ public class EarthQuakeProvider extends ContentProvider {
 
 	private static final int EARTHQUAKES = 1;
 	private static final int EARTHQUAKE_ID = 2;
+
+	private static final int LIMIT = 50;
 
 	private EarthquakeDatabaseHelper dbHelper;
 
@@ -77,7 +80,13 @@ public class EarthQuakeProvider extends ContentProvider {
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sort) {
 
-		SQLiteDatabase database = dbHelper.getWritableDatabase();
+		SQLiteDatabase database;
+
+		try {
+			database = dbHelper.getWritableDatabase();
+		} catch (SQLiteException ex) {
+			database = dbHelper.getReadableDatabase();
+		}
 
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
@@ -102,8 +111,8 @@ public class EarthQuakeProvider extends ContentProvider {
 
 		// Apply the query to the underlying database.
 		Cursor c = qb.query(database, projection, selection, selectionArgs,
-				null, null, orderBy);
-		
+				null, null, orderBy, String.valueOf(LIMIT));
+
 		c.setNotificationUri(getContext().getContentResolver(), uri);
 
 		// Return a cursor to the query result.
@@ -112,7 +121,14 @@ public class EarthQuakeProvider extends ContentProvider {
 
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
-		SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+		SQLiteDatabase database;
+
+		try {
+			database = dbHelper.getWritableDatabase();
+		} catch (SQLiteException ex) {
+			database = dbHelper.getReadableDatabase();
+		}
 
 		long now = System.currentTimeMillis();
 
@@ -134,7 +150,7 @@ public class EarthQuakeProvider extends ContentProvider {
 
 		return null;
 	}
-	
+
 	@Override
 	public int delete(Uri arg0, String arg1, String[] arg2) {
 		// TODO Auto-generated method stub

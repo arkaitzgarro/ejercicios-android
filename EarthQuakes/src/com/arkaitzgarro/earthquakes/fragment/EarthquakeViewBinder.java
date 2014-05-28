@@ -1,5 +1,7 @@
 package com.arkaitzgarro.earthquakes.fragment;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -28,14 +30,16 @@ public class EarthquakeViewBinder implements SimpleCursorAdapter.ViewBinder {
             
             return true;
         } else if(mag_idx == columnIndex) {
-        	double mag = cursor.getDouble(mag_idx) * 10;
+        	double mag = cursor.getDouble(mag_idx);
         	
-        	int red = (int)(255 * mag)/100;
-        	int green = (int)(255*(100 - mag))/100; 
+        	// Gradient from green to red
+        	int red = (int)(255 * mag * 10)/100;
+        	int green = (int)(255*(100 - mag * 10))/100; 
         	int blue = 0;
-        	
-        	v.setText(cursor.getString(mag_idx));
         	v.setBackgroundColor(Color.rgb(red, green, blue));
+        	
+        	DecimalFormat df = new DecimalFormat("0.00");
+        	v.setText(df.format(mag));
         	
         	return true;
         }

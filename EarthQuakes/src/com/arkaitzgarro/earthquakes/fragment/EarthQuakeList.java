@@ -18,7 +18,7 @@ import android.widget.SimpleCursorAdapter;
 import com.arkaitzgarro.earthquakes.R;
 import com.arkaitzgarro.earthquakes.activitiy.DetailActivity;
 import com.arkaitzgarro.earthquakes.provider.EarthQuakeProvider;
-import com.arkaitzgarro.earthquakes.provider.UpdateEarthQuakesTask;
+import com.arkaitzgarro.earthquakes.service.UpdateEarthQuakes;
 
 public class EarthQuakeList extends ListFragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {
@@ -84,8 +84,11 @@ public class EarthQuakeList extends ListFragment implements
 	}
 
 	public void refreshEarthquakes() {
-		new UpdateEarthQuakesTask(getActivity())
-				.execute(getString(R.string.quake_feed));
+//		new UpdateEarthQuakesTask(getActivity())
+//				.execute(getString(R.string.quake_feed));
+		Intent service = new Intent(getActivity(), UpdateEarthQuakes.class);
+		getActivity().startService(service);
+		
 	}
 
 	@Override

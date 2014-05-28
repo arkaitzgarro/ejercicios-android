@@ -13,6 +13,7 @@ import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.arkaitzgarro.earthquakes.R;
 import com.arkaitzgarro.earthquakes.fragment.EarthQuakeList;
@@ -21,6 +22,9 @@ import com.arkaitzgarro.earthquakes.provider.EarthQuakeProvider;
 public class DetailActivity extends Activity implements LoaderCallbacks<Cursor> {
 
 	private static final String TAG = "EARTHQUAKE";
+	
+	private TextView txtMagnitude;
+	private TextView txtPlace;
 
 	// The callbacks through which we will interact with the LoaderManager.
 	private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
@@ -34,6 +38,9 @@ public class DetailActivity extends Activity implements LoaderCallbacks<Cursor> 
 		setContentView(R.layout.activity_detail);
 
 		earthquake_id = getIntent().getLongExtra(EarthQuakeList.ID, 0);
+		
+		txtMagnitude = (TextView)findViewById(R.id.detail_magnitude);
+		txtPlace = (TextView)findViewById(R.id.detail_place);
 
 		mCallbacks = this;
 
@@ -73,21 +80,28 @@ public class DetailActivity extends Activity implements LoaderCallbacks<Cursor> 
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		Uri rowAddress = ContentUris.withAppendedId(EarthQuakeProvider.CONTENT_URI, earthquake_id);
-		
-		CursorLoader loader = new CursorLoader(DetailActivity.this,
-				rowAddress, EarthQuakeProvider.KEYS_ALL,
-				null, null, null);
+		Uri rowAddress = ContentUris.withAppendedId(
+				EarthQuakeProvider.CONTENT_URI, earthquake_id);
+
+		CursorLoader loader = new CursorLoader(DetailActivity.this, rowAddress,
+				EarthQuakeProvider.KEYS_ALL, null, null, null);
 
 		return loader;
 	}
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-		int place_idx = cursor.getColumnIndex(EarthQuakeProvider.Columns.KEY_PLACE);
-		
-		if(cursor.moveToFirst()) {
+		int mag_idx = cursor
+				.getColumnIndex(EarthQuakeProvider.Columns.KEY_MAGNITUDE);
+		int place_idx = cursor
+				.getColumnIndex(EarthQuakeProvider.Columns.KEY_PLACE);
+
+		if (cursor.moveToFirst()) {
+			String magnitude = cursor.getString(mag_idx);
 			String place = cursor.getString(place_idx);
+			
+			txtMagnitude.setText(magnitude);
+			txtPlace.setText(place);
 			Log.d(TAG, place);
 		}
 
@@ -95,7 +109,5 @@ public class DetailActivity extends Activity implements LoaderCallbacks<Cursor> 
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> arg0) {
-		// TODO Auto-generated method stub
-
 	}
 }

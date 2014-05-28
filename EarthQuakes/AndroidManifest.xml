@@ -33,10 +33,31 @@
             android:name="com.arkaitzgarro.earthquakes.activitiy.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
+
         <provider
             android:name="com.arkaitzgarro.earthquakes.provider.EarthQuakeProvider"
             android:authorities="com.arkaitzgarro.provider.earthquakes"
             android:exported="false" />
+
+        <service
+            android:name="com.arkaitzgarro.earthquakes.service.UpdateEarthQuakes"
+            android:enabled="true" >
+        </service>
+
+        <activity
+            android:name="com.arkaitzgarro.earthquakes.activitiy.WebViewActivity"
+            android:label="@string/title_activity_web_view"
+            android:parentActivityName="com.arkaitzgarro.earthquakes.activitiy.DetailActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.arkaitzgarro.earthquakes.activitiy.DetailActivity" />
+        </activity>
+
+        <receiver android:name="com.arkaitzgarro.earthquakes.receiver.EarthquakeAlarmReceiver" >
+            <intent-filter>
+                <action android:name="com.arkaitzgarro.earthquakes.ACTION_REFRESH_EARTHQUAKE_ALARM" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
