@@ -1,7 +1,8 @@
 package com.arkaitzgarro.earthquakes.activitiy;
 
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,24 +10,52 @@ import android.view.MenuItem;
 
 import com.arkaitzgarro.earthquakes.R;
 import com.arkaitzgarro.earthquakes.fragment.EarthQuakeList;
+import com.arkaitzgarro.earthquakes.fragment.EarthQuakeMap;
+import com.arkaitzgarro.earthquakes.fragment.TabListener;
 
 public class MainActivity extends Activity {
 
-	private static final String TAG = "EARTHQUAKE";
+	private TabListener<EarthQuakeList> listTabListener;
+	private TabListener<EarthQuakeMap> mapTabListener;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list);
 
-		if (savedInstanceState == null) {
-			// Get references to the Fragments
-			FragmentTransaction fragmentTransaction = getFragmentManager()
-					.beginTransaction();
-			fragmentTransaction.add(R.id.container, new EarthQuakeList(),
-					"list");
-			fragmentTransaction.commit();
-		}
+		ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+		Tab tabList = actionBar.newTab();
+		listTabListener = new TabListener<EarthQuakeList>(this, R.id.container,
+				EarthQuakeList.class);
+
+		tabList.setText(getResources().getString(R.string.tabs_list))
+				.setContentDescription(
+						getResources().getString(R.string.tabs_list_desc))
+				.setTabListener(listTabListener);
+
+		actionBar.addTab(tabList);
+
+		Tab tabMap = actionBar.newTab();
+		mapTabListener = new TabListener<EarthQuakeMap>(this, R.id.container,
+				EarthQuakeMap.class);
+
+		tabMap.setText(getResources().getString(R.string.tabs_map))
+				.setContentDescription(
+						getResources().getString(R.string.tabs_map_desc))
+				.setTabListener(mapTabListener);
+
+		actionBar.addTab(tabMap);
+
+		// if (savedInstanceState == null) {
+		// // Get references to the Fragments
+		// FragmentTransaction fragmentTransaction = getFragmentManager()
+		// .beginTransaction();
+		// fragmentTransaction.add(R.id.container, new EarthQuakeList(),
+		// "list");
+		// fragmentTransaction.commit();
+		// }
 	}
 
 	@Override

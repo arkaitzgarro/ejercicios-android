@@ -1,7 +1,5 @@
 package com.arkaitzgarro.earthquakes.activitiy;
 
-import java.nio.channels.AlreadyConnectedException;
-
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -11,7 +9,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.arkaitzgarro.earthquakes.R;
 import com.arkaitzgarro.earthquakes.fragment.SettingsFragment;

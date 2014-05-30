@@ -25,8 +25,6 @@ public class EarthQuakeList extends ListFragment implements
 	public final static String ITEMS_ARRAY = "ITEMS_ARRAY";
 	public final static String ID = "_id";
 
-	private static final String TAG = "EARTHQUAKE";
-
 	// The loader's unique id. Loader ids are specific to the Activity or
 	// Fragment in which they reside.
 	private static final int LOADER_ID = 1;

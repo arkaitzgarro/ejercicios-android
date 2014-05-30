@@ -28,7 +28,7 @@ public class EarthQuakeProvider extends ContentProvider {
 
 	private EarthquakeDatabaseHelper dbHelper;
 
-	// Clase interna para declarar las constantes de columna
+	// Inner class for columns
 	public static final class Columns implements BaseColumns {
 		// Column Names
 		public static final String KEY_ID_STR = "id_str";

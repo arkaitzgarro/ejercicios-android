@@ -26,5 +26,9 @@
     <string name="category_network_preferences">Network</string>
     <string name="earthquakes_updated">Earthquakes updated!</string>
     <string name="title_activity_web_view">WebViewActivity</string>
+    <string name="tabs_list">List</string>
+    <string name="tabs_list_desc">Earthquakes list</string>
+    <string name="tabs_map">Map</string>
+    <string name="tabs_map_desc">Earthquakes map</string>
 
 </resources>
