@@ -12,6 +12,7 @@ import com.arkaitzgarro.earthquakes.R;
 import com.arkaitzgarro.earthquakes.fragment.EarthQuakeList;
 import com.arkaitzgarro.earthquakes.fragment.EarthQuakeMap;
 import com.arkaitzgarro.earthquakes.fragment.TabListener;
+import com.arkaitzgarro.earthquakes.receiver.EarthquakeAlarmReceiver;
 
 public class MainActivity extends Activity {
 
@@ -47,15 +48,6 @@ public class MainActivity extends Activity {
 				.setTabListener(mapTabListener);
 
 		actionBar.addTab(tabMap);
-
-		// if (savedInstanceState == null) {
-		// // Get references to the Fragments
-		// FragmentTransaction fragmentTransaction = getFragmentManager()
-		// .beginTransaction();
-		// fragmentTransaction.add(R.id.container, new EarthQuakeList(),
-		// "list");
-		// fragmentTransaction.commit();
-		// }
 	}
 
 	@Override
@@ -73,8 +65,9 @@ public class MainActivity extends Activity {
 			startActivity(i);
 			return true;
 		} else if (id == R.id.action_refresh) {
-			((EarthQuakeList) getFragmentManager().findFragmentByTag("list"))
-					.refreshEarthquakes();
+			Intent i = new Intent(
+					EarthquakeAlarmReceiver.ACTION_REFRESH_EARTHQUAKE_ALARM);
+			startService(i);
 		}
 
 		return super.onOptionsItemSelected(item);

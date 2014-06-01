@@ -46,7 +46,6 @@ public class EarthQuakeMap extends MapFragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		setupMapIfNeeded();
 		earthQuakeMarkers = new HashMap<Marker, String>();
 
 		mCallbacks = this;
@@ -56,11 +55,17 @@ public class EarthQuakeMap extends MapFragment implements
 
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
 
+		setupMapIfNeeded();
 		getLoaderManager().restartLoader(LOADER_ID, null, mCallbacks);
 	}
 	
@@ -112,14 +117,20 @@ public class EarthQuakeMap extends MapFragment implements
 			earthQuakeMarkers.put(m, String.valueOf(cursor.getLong(id_idx)));
 		}
 		
-		CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(builder.build(), 50);
-		map.animateCamera(cu);
+		if(earthQuakeMarkers.size() > 0) {
+			CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(builder.build(), 50);
+			map.animateCamera(cu);
+		}
 		
 		cursor.close();
 	}
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
+		earthQuakeMarkers.clear();
+		
+		if(map != null)
+			map.clear();
 	}
 
 	@Override
