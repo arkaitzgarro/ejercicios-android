@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ConfigChange</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_activity_b">ActivityB</string>
+    <string name="open_b">Open Activity B</string>
+    <string name="close">Close</string>
+    <string name="open_a">Open Activity A</string>
+</resources>
