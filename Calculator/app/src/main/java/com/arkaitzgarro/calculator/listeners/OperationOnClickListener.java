@@ -8,7 +8,7 @@ import android.widget.Button;
  */
 public class OperationOnClickListener implements View.OnClickListener {
     public interface OperationListenerInterface {
-        public void setOperation(String number);
+        public void setOperation(String op);
     }
 
     private OperationListenerInterface target;

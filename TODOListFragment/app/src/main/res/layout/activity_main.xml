@@ -1,0 +1,19 @@
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.arkaitzgarro.todolistfragment.fragments.InputFragment"
+        android:id="@+id/inputFragment" />
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:name="com.arkaitzgarro.todolistfragment.fragments.TodoListFragment"
+        android:id="@+id/listFragment"
+        android:layout_weight="1" />
+</LinearLayout>

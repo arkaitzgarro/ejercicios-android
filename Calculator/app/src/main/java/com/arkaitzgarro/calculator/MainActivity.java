@@ -15,7 +15,9 @@ import java.util.ArrayList;
 /**
  * Created by Arkaitz Garro on 18/03/15.
  */
-public class MainActivity  extends ActionBarActivity implements NumberOnClickListener.NumberListenerInterface {
+public class MainActivity extends ActionBarActivity
+        implements NumberOnClickListener.NumberListenerInterface,
+        OperationOnClickListener.OperationListenerInterface {
 
     private final String CALC = "CALC";
 
@@ -43,7 +45,7 @@ public class MainActivity  extends ActionBarActivity implements NumberOnClickLis
         String id;
         Button btn;
 
-        for (int i = 0; i < numbers.length; i++){
+        for (int i = 0; i < numbers.length; i++) {
             id = "btn".concat(numbers[i]);
 
             btn = (Button) findViewById(getResources().getIdentifier(id, "id", getPackageName()));
@@ -52,7 +54,7 @@ public class MainActivity  extends ActionBarActivity implements NumberOnClickLis
 
         String[] operations = {"Add", "Sub", "Multiply", "Divide"};
 
-        for (int i = 0; i < numbers.length; i++){
+        for (int i = 0; i < numbers.length; i++) {
             id = "btn".concat(numbers[i]);
 
             btn = (Button) findViewById(getResources().getIdentifier(id, "id", getPackageName()));
@@ -65,7 +67,7 @@ public class MainActivity  extends ActionBarActivity implements NumberOnClickLis
      */
     private void addEventListeners() {
         View.OnClickListener numberOnClickListener = new NumberOnClickListener(this);
-        View.OnClickListener operationOnClickListener = new OperationOnClickListener();
+        View.OnClickListener operationOnClickListener = new OperationOnClickListener(this);
 
         // Add listeners to number buttons
         for (int i = 0; i < numberButtons.size(); i++) {
@@ -81,5 +83,10 @@ public class MainActivity  extends ActionBarActivity implements NumberOnClickLis
     @Override
     public void setNumber(String number) {
         Log.d(CALC, number);
+    }
+
+    @Override
+    public void setOperation(String op) {
+        Log.d(CALC, op);
     }
 }
