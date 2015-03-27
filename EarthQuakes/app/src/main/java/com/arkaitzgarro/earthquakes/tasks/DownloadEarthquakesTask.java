@@ -1,9 +1,11 @@
 package com.arkaitzgarro.earthquakes.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.arkaitzgarro.earthquakes.model.Coordenade;
+import com.arkaitzgarro.earthquakes.database.EarthQuakeDB;
+import com.arkaitzgarro.earthquakes.model.Coordinate;
 import com.arkaitzgarro.earthquakes.model.EarthQuake;
 
 import org.json.JSONArray;
@@ -23,8 +25,9 @@ import java.net.URLConnection;
  */
 public class DownloadEarthquakesTask extends AsyncTask<String, EarthQuake, Integer> {
 
+    private EarthQuakeDB earthQuakeDB;
+
     public interface AddEarthQuakeInterface {
-        public void addEarthQuake(EarthQuake earthquake);
         public void notifyTotal(int total);
     }
 
@@ -32,8 +35,10 @@ public class DownloadEarthquakesTask extends AsyncTask<String, EarthQuake, Integ
 
     private AddEarthQuakeInterface target;
 
-    public DownloadEarthquakesTask(AddEarthQuakeInterface target) {
+    public DownloadEarthquakesTask(Context context, AddEarthQuakeInterface target) {
         this.target = target;
+
+        earthQuakeDB = new EarthQuakeDB(context);
     }
 
     @Override
@@ -51,7 +56,6 @@ public class DownloadEarthquakesTask extends AsyncTask<String, EarthQuake, Integ
     protected void onProgressUpdate(EarthQuake... earthQuakes) {
         super.onProgressUpdate(earthQuakes);
 
-        target.addEarthQuake(earthQuakes[0]);
     }
 
     @Override
@@ -107,7 +111,7 @@ public class DownloadEarthquakesTask extends AsyncTask<String, EarthQuake, Integ
         try {
             // Obtain coordinates
             JSONArray jsonCoords = jsonObj.getJSONObject("geometry").getJSONArray("coordinates");
-            Coordenade coords = new Coordenade(jsonCoords.getDouble(0), jsonCoords.getDouble(1), jsonCoords.getDouble(2));
+            Coordinate coords = new Coordinate(jsonCoords.getDouble(0), jsonCoords.getDouble(1), jsonCoords.getDouble(2));
 
             JSONObject properties = jsonObj.getJSONObject("properties");
 

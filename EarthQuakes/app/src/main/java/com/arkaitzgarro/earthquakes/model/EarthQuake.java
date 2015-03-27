@@ -15,7 +15,7 @@ public class EarthQuake {
 
     private Date time;
 
-    private Coordenade coords;
+    private Coordinate coords;
 
     private double magnitude;
 
@@ -24,7 +24,7 @@ public class EarthQuake {
     public EarthQuake() {
     }
 
-    public EarthQuake(String _id, String place, Date time, Coordenade coords, double magnitude) {
+    public EarthQuake(String _id, String place, Date time, Coordinate coords, double magnitude) {
         this._id = _id;
         this.place = place;
         this.time = time;
@@ -59,7 +59,7 @@ public class EarthQuake {
     }
 
     public String getTimeFormated() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd H:m:s a");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss a");
 
         return sdf.format(time);
     }
@@ -72,11 +72,11 @@ public class EarthQuake {
         this.time = new Date(time);
     }
 
-    public Coordenade getCoords() {
+    public Coordinate getCoords() {
         return coords;
     }
 
-    public void setCoords(Coordenade coords) {
+    public void setCoords(Coordinate coords) {
         this.coords = coords;
     }
 

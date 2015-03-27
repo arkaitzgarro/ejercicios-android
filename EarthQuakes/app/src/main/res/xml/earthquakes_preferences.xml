@@ -34,7 +34,7 @@
             android:title="@string/min_quake_mag_prompt"
             android:summary="@string/min_quake_mag_desc"
             android:entries="@array/magnitude_entries"
-            android:entryValues="@array/magnitude_entries">
+            android:entryValues="@array/magnitude_entry_values">
 
         </ListPreference>
     </PreferenceCategory>

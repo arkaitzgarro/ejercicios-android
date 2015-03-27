@@ -3,7 +3,7 @@ package com.arkaitzgarro.earthquakes.model;
 /**
  * Created by arkaitz on 25/03/15.
  */
-public class Coordenade {
+public class Coordinate {
 
     /**
      * Latitude
@@ -20,7 +20,7 @@ public class Coordenade {
      */
     private double depth;
 
-    public Coordenade(double lat, double lng, double depth) {
+    public Coordinate(double lat, double lng, double depth) {
         this.lat = lat;
         this.lng = lng;
         this.depth = depth;
