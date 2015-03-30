@@ -55,7 +55,6 @@ public class DownloadEarthquakesTask extends AsyncTask<String, EarthQuake, Integ
     @Override
     protected void onProgressUpdate(EarthQuake... earthQuakes) {
         super.onProgressUpdate(earthQuakes);
-
     }
 
     @Override
@@ -125,7 +124,8 @@ public class DownloadEarthquakesTask extends AsyncTask<String, EarthQuake, Integ
 
             Log.d(EARTHQUAKE, earthQuake.toString());
 
-            publishProgress(earthQuake);
+            earthQuakeDB.insertEarthQuake(earthQuake);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

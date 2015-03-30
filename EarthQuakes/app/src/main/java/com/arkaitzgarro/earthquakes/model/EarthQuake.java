@@ -22,6 +22,7 @@ public class EarthQuake {
     private String url;
 
     public EarthQuake() {
+        this.coords = new Coordinate(0.0, 0.0, 0.0);
     }
 
     public EarthQuake(String _id, String place, Date time, Coordinate coords, double magnitude) {
@@ -100,5 +101,17 @@ public class EarthQuake {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public void setLatitude(double latitude) {
+        this.coords.setLat(latitude);
+    }
+
+    public void setLongitude(double longitude) {
+        this.coords.setLng(longitude);
+    }
+
+    public void setDepth(double depth) {
+        this.coords.setDepth(depth);
     }
 }

@@ -14,9 +14,11 @@ import android.widget.ListView;
 import com.arkaitzgarro.earthquakes.R;
 import com.arkaitzgarro.earthquakes.activities.DetailAtivity;
 import com.arkaitzgarro.earthquakes.adapters.EarthQuakeAdapter;
+import com.arkaitzgarro.earthquakes.database.EarthQuakeDB;
 import com.arkaitzgarro.earthquakes.model.EarthQuake;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A fragment representing a list of EarthQuakes.
@@ -26,8 +28,9 @@ public class EarthQuakeListFragment extends ListFragment {
     public static final String ID = "_id";
 
     private SharedPreferences prefs;
+    private EarthQuakeDB earthQuakeDB;
 
-    private ArrayList<EarthQuake> earthQuakes;
+    private List<EarthQuake> earthQuakes;
     private ArrayAdapter<EarthQuake> aa;
 
     @Override
@@ -37,6 +40,7 @@ public class EarthQuakeListFragment extends ListFragment {
         earthQuakes = new ArrayList<>();
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        earthQuakeDB = new EarthQuakeDB(getActivity());
     }
 
     @Override
@@ -52,6 +56,9 @@ public class EarthQuakeListFragment extends ListFragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        int minMag = Integer.parseInt(prefs.getString(getString(R.string.PREF_MIN_MAG), "0"));
+        earthQuakes.addAll(earthQuakeDB.getAllByMagnitude(minMag));
     }
 
     @Override
