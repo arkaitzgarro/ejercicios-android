@@ -26,10 +26,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.arkaitzgarro.earthquakes.activities.MainActivity" />
         </activity>
-        <activity android:name=".activities.SettingsActivity"
-            android:label="@string/title_activity_settings">
-
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:label="@string/title_activity_settings" >
         </activity>
+
+        <service
+            android:name=".services.DownloadEarthquakesService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 import com.arkaitzgarro.earthquakes.model.EarthQuake;
 
@@ -18,6 +19,8 @@ import java.util.List;
  * Created by arkaitz on 27/03/15.
  */
 public class EarthQuakeDB {
+
+    private final String EARTHQUAKES = "EARTHQUAKES";
 
     private EarthQuakeOpenHelper helper;
     private SQLiteDatabase db;
@@ -67,7 +70,7 @@ public class EarthQuakeDB {
         try {
             db.insertOrThrow(EarthQuakeOpenHelper.DATABASE_TABLE, null, insert);
         } catch (SQLException ex) {
-
+            Log.e(EARTHQUAKES, ex.getMessage());
         }
     }
 
@@ -82,6 +85,17 @@ public class EarthQuakeDB {
         };
 
         return query(where, whereArgs);
+    }
+
+    public EarthQuake getEarthQuake(String id) {
+        String where = KEY_ID + " = ?";
+        String[] whereArgs = {
+                id
+        };
+
+        List<EarthQuake> all = query(where, whereArgs);
+
+        return (all.size() > 0) ? all.get(0) : null;
     }
 
     private List<EarthQuake> query(String where, String[] whereArgs) {

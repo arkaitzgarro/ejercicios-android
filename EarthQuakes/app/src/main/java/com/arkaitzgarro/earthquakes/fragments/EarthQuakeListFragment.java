@@ -37,8 +37,6 @@ public class EarthQuakeListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        earthQuakes = new ArrayList<>();
-
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         earthQuakeDB = new EarthQuakeDB(getActivity());
     }
@@ -47,6 +45,7 @@ public class EarthQuakeListFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = super.onCreateView(inflater, container, savedInstanceState);
 
+        earthQuakes = new ArrayList<>();
         aa = new EarthQuakeAdapter(getActivity(), R.layout.earthquake_item, earthQuakes);
         setListAdapter(aa);
 
@@ -58,7 +57,11 @@ public class EarthQuakeListFragment extends ListFragment {
         super.onResume();
 
         int minMag = Integer.parseInt(prefs.getString(getString(R.string.PREF_MIN_MAG), "0"));
+
+        earthQuakes.clear();
         earthQuakes.addAll(earthQuakeDB.getAllByMagnitude(minMag));
+
+        aa.notifyDataSetChanged();
     }
 
     @Override

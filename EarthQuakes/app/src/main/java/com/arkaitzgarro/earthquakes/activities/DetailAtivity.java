@@ -6,23 +6,48 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.arkaitzgarro.earthquakes.R;
+import com.arkaitzgarro.earthquakes.database.EarthQuakeDB;
 import com.arkaitzgarro.earthquakes.fragments.EarthQuakeListFragment;
+import com.arkaitzgarro.earthquakes.model.EarthQuake;
+
+import java.util.List;
 
 public class DetailAtivity extends ActionBarActivity {
 
     private final String DETAIL = "DETAIL";
+
+    private EarthQuakeDB earthQuakeDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_ativity);
 
+        earthQuakeDB = new EarthQuakeDB(this);
+
         Intent detailIntent = getIntent();
         String id = detailIntent.getStringExtra(EarthQuakeListFragment.ID);
 
-        Log.d(DETAIL, id);
+        EarthQuake earthQuake = earthQuakeDB.getEarthQuake(id);
+
+        showEarthQuake(earthQuake);
+    }
+
+    private void showEarthQuake(EarthQuake earthQuake) {
+        Log.d(DETAIL, earthQuake.getId());
+
+        TextView lblMagnitude = (TextView) findViewById(R.id.lblMag);
+        TextView lblPlace = (TextView) findViewById(R.id.lblPlace);
+        TextView lblDate = (TextView) findViewById(R.id.lblDate);
+        TextView lblUrl = (TextView) findViewById(R.id.lblUrl);
+
+        lblMagnitude.setText(earthQuake.getMagnitudeFormated());
+        lblPlace.setText(earthQuake.getPlace());
+        lblDate.setText(earthQuake.getTimeFormated());
+        lblUrl.setText(earthQuake.getUrl());
     }
 
     @Override
