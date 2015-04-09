@@ -1,6 +1,8 @@
 package com.arkaitzgarro.earthquakes.activities;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,18 +10,21 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.arkaitzgarro.earthquakes.R;
+import com.arkaitzgarro.earthquakes.managers.EarthQuakeAlarmManager;
 import com.arkaitzgarro.earthquakes.services.DownloadEarthquakesService;
 import com.arkaitzgarro.earthquakes.tasks.DownloadEarthquakesTask;
 
 
 public class MainActivity extends ActionBarActivity implements DownloadEarthquakesTask.AddEarthQuakeInterface {
 
+    private final String EARTHQUAKE_PREFS = "EARTHQUAKE_PREFS";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        downloadEarthQuakes();
+        checkToSetAlarm();
     }
 
     @Override
@@ -47,12 +52,22 @@ public class MainActivity extends ActionBarActivity implements DownloadEarthquak
         return super.onOptionsItemSelected(item);
     }
 
-    private void downloadEarthQuakes() {
+    private void checkToSetAlarm() {
 //        DownloadEarthquakesTask task = new DownloadEarthquakesTask(this, this);
 //        task.execute(getString(R.string.earthquakes_url));
 
-        Intent download = new Intent(this, DownloadEarthquakesService.class);
-        startService(download);
+//        Intent download = new Intent(this, DownloadEarthquakesService.class);
+//        startService(download);
+
+        String KEY = "LAUNCHED_BEFORE";
+        SharedPreferences prefs = getSharedPreferences(EARTHQUAKE_PREFS, Activity.MODE_PRIVATE);
+
+        if (!prefs.getBoolean(KEY, false)) {
+            long interval = getResources().getInteger(R.integer.default_interval) * 60 * 1000;
+            EarthQuakeAlarmManager.setAlarm(this, interval);
+
+            prefs.edit().putBoolean(KEY, true).apply();
+        }
 
     }
 

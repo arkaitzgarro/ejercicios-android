@@ -1,16 +1,11 @@
 package com.arkaitzgarro.earthquakes.fragments;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.arkaitzgarro.earthquakes.R;
 
 public class SettingsFragment extends PreferenceFragment {
-
-    private final String EARTHQUAKES = "EARTHQUAKES";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -19,6 +14,5 @@ public class SettingsFragment extends PreferenceFragment {
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.earthquakes_preferences);
     }
-
 
 }

@@ -11,8 +11,17 @@ import android.widget.TextView;
 import com.arkaitzgarro.earthquakes.R;
 import com.arkaitzgarro.earthquakes.database.EarthQuakeDB;
 import com.arkaitzgarro.earthquakes.fragments.EarthQuakeListFragment;
+import com.arkaitzgarro.earthquakes.fragments.EarthQuakesMapFragment;
 import com.arkaitzgarro.earthquakes.model.EarthQuake;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetailAtivity extends ActionBarActivity {
@@ -21,10 +30,14 @@ public class DetailAtivity extends ActionBarActivity {
 
     private EarthQuakeDB earthQuakeDB;
 
+    private EarthQuakesMapFragment mapFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_ativity);
+
+        mapFragment = (EarthQuakesMapFragment)getFragmentManager().findFragmentById(R.id.map_fragment);
 
         earthQuakeDB = new EarthQuakeDB(this);
 
@@ -48,6 +61,16 @@ public class DetailAtivity extends ActionBarActivity {
         lblPlace.setText(earthQuake.getPlace());
         lblDate.setText(earthQuake.getTimeFormated());
         lblUrl.setText(earthQuake.getUrl());
+
+        showMap(earthQuake);
+    }
+
+    private void showMap(EarthQuake earthQuake) {
+        List<EarthQuake> earthQuakes = new ArrayList<>();
+        earthQuakes.add(earthQuake);
+        earthQuakes.add(earthQuake);
+
+        mapFragment.setEarthQuakes(earthQuakes);
     }
 
     @Override

@@ -89,6 +89,8 @@ public class DownloadEarthquakesService extends Service {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
+        } finally {
+            stopSelf();
         }
 
         return count;

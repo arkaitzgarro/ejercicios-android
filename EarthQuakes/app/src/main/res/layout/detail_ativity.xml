@@ -44,4 +44,14 @@
         android:autoLink="web"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <fragment
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:name="com.arkaitzgarro.earthquakes.fragments.EarthQuakesMapFragment"
+        android:id="@+id/map_fragment"
+        android:layout_below="@+id/lblDate"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/lblUrl"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

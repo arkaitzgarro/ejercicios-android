@@ -13,7 +13,7 @@
 
         <!-- Frecuencia refresco -->
         <ListPreference
-            android:defaultValue="5"
+            android:defaultValue="@integer/default_interval"
             android:key="@string/PREF_UPDATE_INTERVAL"
             android:title="@string/update_freq_prompt"
             android:summary="@string/update_interval_desc"

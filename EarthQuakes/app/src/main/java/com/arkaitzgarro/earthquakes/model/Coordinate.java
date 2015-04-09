@@ -26,6 +26,11 @@ public class Coordinate {
         this.depth = depth;
     }
 
+    @Override
+    public String toString() {
+        return String.valueOf(this.getLat()).concat(",").concat(String.valueOf(this.getLng()));
+    }
+
     public double getLat() {
         return lat;
     }
