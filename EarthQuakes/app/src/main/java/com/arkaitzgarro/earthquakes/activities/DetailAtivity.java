@@ -68,7 +68,6 @@ public class DetailAtivity extends ActionBarActivity {
     private void showMap(EarthQuake earthQuake) {
         List<EarthQuake> earthQuakes = new ArrayList<>();
         earthQuakes.add(earthQuake);
-        earthQuakes.add(earthQuake);
 
         mapFragment.setEarthQuakes(earthQuakes);
     }

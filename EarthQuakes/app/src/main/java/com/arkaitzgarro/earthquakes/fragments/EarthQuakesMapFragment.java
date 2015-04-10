@@ -17,6 +17,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
@@ -46,23 +47,38 @@ public class EarthQuakesMapFragment extends MapFragment implements GoogleMap.OnM
 
     @Override
     public void onMapLoaded() {
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-
         map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
 
-        for (EarthQuake earthQuake: earthQuakes) {
-            LatLng point = new LatLng(
-                    earthQuake.getCoords().getLng(),
-                    earthQuake.getCoords().getLat()
-            );
+        if (earthQuakes.size() == 1) {
+            showEarthQuakes(earthQuakes.get(0));
+        } else {
+            showEarthQuakes(earthQuakes);
+        }
+    }
 
-            MarkerOptions marker = new MarkerOptions()
-                    .position(point)
-                    .title(earthQuake.getMagnitudeFormated().concat(" ").concat(earthQuake.getPlace()))
-                    .snippet(earthQuake.getCoords().toString());
+    private void showEarthQuakes(EarthQuake earthQuake) {
+        MarkerOptions marker = createMarker(earthQuake);
+
+        map.addMarker(marker);
+
+        CameraPosition camPos = new CameraPosition.Builder().target(marker.getPosition())
+                .zoom(5)
+                .build();
+
+        CameraUpdate camUpd = CameraUpdateFactory.newCameraPosition(camPos);
+
+        map.animateCamera(camUpd);
+    }
+
+    private void showEarthQuakes(List<EarthQuake> earthQuakes) {
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+        for (EarthQuake earthQuake: earthQuakes) {
+
+            MarkerOptions marker = createMarker(earthQuake);
 
             map.addMarker(marker);
-            builder.include(point);
+            builder.include(marker.getPosition());
         }
 
         LatLngBounds bounds = builder.build();
@@ -70,5 +86,19 @@ public class EarthQuakesMapFragment extends MapFragment implements GoogleMap.OnM
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 10);
 
         map.animateCamera(cu);
+    }
+
+    private MarkerOptions createMarker(EarthQuake earthQuake) {
+        LatLng point = new LatLng(
+                earthQuake.getCoords().getLng(),
+                earthQuake.getCoords().getLat()
+        );
+
+        MarkerOptions marker = new MarkerOptions()
+                .position(point)
+                .title(earthQuake.getMagnitudeFormated().concat(" ").concat(earthQuake.getPlace()))
+                .snippet(earthQuake.getCoords().toString());
+
+        return marker;
     }
 }
