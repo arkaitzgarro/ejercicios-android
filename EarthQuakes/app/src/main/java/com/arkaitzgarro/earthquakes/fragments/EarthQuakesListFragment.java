@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * A fragment representing a list of EarthQuakes.
  */
-public class EarthQuakeListFragment extends ListFragment {
+public class EarthQuakesListFragment extends ListFragment {
 
     public static final String ID = "_id";
 

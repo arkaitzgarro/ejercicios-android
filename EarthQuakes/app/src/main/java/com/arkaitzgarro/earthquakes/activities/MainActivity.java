@@ -1,29 +1,36 @@
 package com.arkaitzgarro.earthquakes.activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.arkaitzgarro.earthquakes.R;
+import com.arkaitzgarro.earthquakes.fragments.EarthQuakesListFragment;
+import com.arkaitzgarro.earthquakes.fragments.EarthQuakesListMapFragment;
+import com.arkaitzgarro.earthquakes.fragments.abstracts.AbstractMapFragment;
+import com.arkaitzgarro.earthquakes.listeners.TabListener;
 import com.arkaitzgarro.earthquakes.managers.EarthQuakeAlarmManager;
-import com.arkaitzgarro.earthquakes.services.DownloadEarthquakesService;
 import com.arkaitzgarro.earthquakes.tasks.DownloadEarthquakesTask;
 
 
-public class MainActivity extends ActionBarActivity implements DownloadEarthquakesTask.AddEarthQuakeInterface {
+public class MainActivity extends Activity implements DownloadEarthquakesTask.AddEarthQuakeInterface {
 
     private final String EARTHQUAKE_PREFS = "EARTHQUAKE_PREFS";
+    private final String SELECTED_TAB = "SELECTED_TAB";
+
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        createTabs();
         checkToSetAlarm();
     }
 
@@ -50,6 +57,44 @@ public class MainActivity extends ActionBarActivity implements DownloadEarthquak
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void createTabs() {
+        actionBar = getActionBar();
+
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        ActionBar.Tab tabList = actionBar.newTab();
+
+        tabList.setText(getString(R.string.tab_list_title))
+                .setTabListener(
+                        new TabListener<EarthQuakesListFragment>
+                                (this, R.id.fragmentContainer, EarthQuakesListFragment.class));
+
+        actionBar.addTab(tabList);
+
+        ActionBar.Tab tabMap = actionBar.newTab();
+
+        tabMap.setText(getString(R.string.tab_map_title))
+                .setTabListener(
+                        new TabListener<EarthQuakesListMapFragment>
+                                (this, R.id.fragmentContainer, EarthQuakesListMapFragment.class));
+
+        actionBar.addTab(tabMap);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        actionBar.setSelectedNavigationItem(savedInstanceState.getInt(SELECTED_TAB, 0));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(SELECTED_TAB, actionBar.getSelectedNavigationIndex());
+
+        super.onSaveInstanceState(outState);
     }
 
     private void checkToSetAlarm() {
