@@ -20,4 +20,6 @@
     <string name="min_quake_mag_desc">Select the minimum magnitude earthquake to report</string>
     <string name="tab_list_title">LIST</string>
     <string name="tab_map_title">MAP</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="count_earthquakes">%d new earthquakes</string>
 </resources>

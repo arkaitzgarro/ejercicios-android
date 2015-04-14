@@ -25,7 +25,7 @@ public class EarthQuakeMapFragment extends AbstractMapFragment {
     protected void showMap() {
         MarkerOptions marker = createMarker(earthQuake);
 
-        getMap().addMarker(marker);
+        map.addMarker(marker);
 
         CameraPosition camPos = new CameraPosition.Builder().target(marker.getPosition())
                 .zoom(5)
@@ -33,6 +33,6 @@ public class EarthQuakeMapFragment extends AbstractMapFragment {
 
         CameraUpdate camUpd = CameraUpdateFactory.newCameraPosition(camPos);
 
-        getMap().animateCamera(camUpd);
+        map.animateCamera(camUpd);
     }
 }

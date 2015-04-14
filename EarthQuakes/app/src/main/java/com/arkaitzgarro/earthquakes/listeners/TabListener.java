@@ -22,13 +22,13 @@ public class TabListener<T extends Fragment> implements ActionBar.TabListener {
         this.fragmentClass = fragmentClass;
     }
 
-
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
         if (fragment == null) {
             String fragmentName = fragmentClass.getName();
             fragment = Fragment.instantiate(activity, fragmentName);
-            ft.add(fragmentContainer, fragment, fragmentName);
+            // This should be ft.add(), but cause fragments overlapping
+            ft.replace(fragmentContainer, fragment, fragmentName);
         } else {
             ft.attach(fragment);
         }

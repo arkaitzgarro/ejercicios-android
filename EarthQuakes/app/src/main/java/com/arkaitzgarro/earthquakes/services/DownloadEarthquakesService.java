@@ -1,14 +1,20 @@
 package com.arkaitzgarro.earthquakes.services;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.os.IBinder;
 import android.util.Log;
 
 import com.arkaitzgarro.earthquakes.R;
+import com.arkaitzgarro.earthquakes.activities.MainActivity;
 import com.arkaitzgarro.earthquakes.database.EarthQuakeDB;
 import com.arkaitzgarro.earthquakes.model.Coordinate;
 import com.arkaitzgarro.earthquakes.model.EarthQuake;
+import com.arkaitzgarro.earthquakes.tasks.DownloadEarthquakesTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -80,8 +86,11 @@ public class DownloadEarthquakesService extends Service {
 
                 for (int i = earthquakes.length()-1; i >= 0; i--) {
                     processEarthQuakeTask(earthquakes.getJSONObject(i));
+                    count++;
                 }
             }
+
+            sendNotification(count);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -119,6 +128,35 @@ public class DownloadEarthquakesService extends Service {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void sendNotification(int count) {
+
+        Intent intentToFire = new Intent(this, MainActivity.class);
+        PendingIntent activityIntent = PendingIntent.getActivity(this, 0, intentToFire, 0);
+
+        Notification.Builder builder = new Notification.Builder(DownloadEarthquakesService.this);
+
+        builder
+            .setSmallIcon(R.drawable.ic_launcher)
+            .setContentTitle(getString(R.string.app_name))
+            .setContentText(getString(R.string.count_earthquakes, count))
+            .setWhen(System.currentTimeMillis())
+            .setDefaults(Notification.DEFAULT_SOUND)
+            .setSound(
+                    RingtoneManager.getDefaultUri(
+                            RingtoneManager.TYPE_NOTIFICATION))
+            .setContentIntent(activityIntent)
+            .setAutoCancel(true)
+            ;
+
+        Notification notification = builder.build();
+
+        NotificationManager notificationManager
+                = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+        int NOTIFICATION_REF = 1;
+        notificationManager.notify(NOTIFICATION_REF, notification);
     }
 
     @Override

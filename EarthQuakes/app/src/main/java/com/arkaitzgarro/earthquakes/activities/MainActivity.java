@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.arkaitzgarro.earthquakes.R;
@@ -38,6 +39,7 @@ public class MainActivity extends Activity implements DownloadEarthquakesTask.Ad
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
@@ -65,20 +67,18 @@ public class MainActivity extends Activity implements DownloadEarthquakesTask.Ad
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         ActionBar.Tab tabList = actionBar.newTab();
+        TabListener<EarthQuakesListFragment> listListener= new TabListener<>(this, R.id.fragmentContainer, EarthQuakesListFragment.class);
 
         tabList.setText(getString(R.string.tab_list_title))
-                .setTabListener(
-                        new TabListener<EarthQuakesListFragment>
-                                (this, R.id.fragmentContainer, EarthQuakesListFragment.class));
+                .setTabListener(listListener);
 
         actionBar.addTab(tabList);
 
         ActionBar.Tab tabMap = actionBar.newTab();
+        TabListener<EarthQuakesListMapFragment> mapListener= new TabListener<>(this, R.id.fragmentContainer, EarthQuakesListMapFragment.class);
 
         tabMap.setText(getString(R.string.tab_map_title))
-                .setTabListener(
-                        new TabListener<EarthQuakesListMapFragment>
-                                (this, R.id.fragmentContainer, EarthQuakesListMapFragment.class));
+                .setTabListener(mapListener);
 
         actionBar.addTab(tabMap);
     }
@@ -113,7 +113,6 @@ public class MainActivity extends Activity implements DownloadEarthquakesTask.Ad
 
             prefs.edit().putBoolean(KEY, true).apply();
         }
-
     }
 
     @Override

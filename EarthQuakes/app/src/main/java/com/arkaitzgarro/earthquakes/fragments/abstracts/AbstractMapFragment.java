@@ -32,8 +32,6 @@ public abstract class AbstractMapFragment extends MapFragment implements GoogleM
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = super.onCreateView(inflater, container, savedInstanceState);
 
-        getMap().setOnMapLoadedCallback(this);
-
         return layout;
     }
 
@@ -42,18 +40,19 @@ public abstract class AbstractMapFragment extends MapFragment implements GoogleM
         super.onResume();
 
         setupMapIfNeeded();
+        map.setOnMapLoadedCallback(this);
     }
 
     private void setupMapIfNeeded() {
         if(map == null) {
-            map = this.getMap();
+            map = getMap();
         }
     }
 
     protected MarkerOptions createMarker(EarthQuake earthQuake) {
         LatLng point = new LatLng(
-                earthQuake.getCoords().getLng(),
-                earthQuake.getCoords().getLat()
+            earthQuake.getCoords().getLng(),
+            earthQuake.getCoords().getLat()
         );
 
         MarkerOptions marker = new MarkerOptions()

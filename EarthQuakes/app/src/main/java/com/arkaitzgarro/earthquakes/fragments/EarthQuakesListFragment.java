@@ -6,6 +6,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -16,6 +19,7 @@ import com.arkaitzgarro.earthquakes.activities.DetailAtivity;
 import com.arkaitzgarro.earthquakes.adapters.EarthQuakeAdapter;
 import com.arkaitzgarro.earthquakes.database.EarthQuakeDB;
 import com.arkaitzgarro.earthquakes.model.EarthQuake;
+import com.arkaitzgarro.earthquakes.services.DownloadEarthquakesService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +40,8 @@ public class EarthQuakesListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         earthQuakeDB = new EarthQuakeDB(getActivity());
@@ -72,5 +78,25 @@ public class EarthQuakesListFragment extends ListFragment {
         detailIntent.putExtra(ID, earthQuakes.get(position).getId());
 
         startActivity(detailIntent);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.menu_refresh, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.action_refresh) {
+            Intent download = new Intent(getActivity(), DownloadEarthquakesService.class);
+            getActivity().startService(download);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
