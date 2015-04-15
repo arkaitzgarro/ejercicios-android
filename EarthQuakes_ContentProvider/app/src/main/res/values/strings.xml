@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">EarthQuakes</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="earthquakes_url">http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson</string>
+    <string name="title_activity_detail_ativity">DetailAtivity</string>
+    <string name="num_earthquakes">%d earthquakes processed</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="earthquakes_refresh">Earthquakes refresh</string>
+    <string name="earthquakes_filter">Filter</string>
+    <string name="PREF_AUTO_UPDATE">PREF_AUTO_UPDATE</string>
+    <string name="PREF_UPDATE_INTERVAL">PREF_UPDATE_INTERVAL</string>
+    <string name="PREF_MIN_MAG">PREF_MIN_MAG</string>
+    <string name="auto_update_desc">Update earthquakes automatically or not</string>
+    <string name="auto_update_prompt">Auto update</string>
+    <string name="update_freq_prompt">Update Frequency</string>
+    <string name="min_quake_mag_prompt">Minimum Quake Magnitude</string>
+    <string name="update_interval_desc">Frequency at which to refresh earthquake list</string>
+    <string name="min_quake_mag_desc">Select the minimum magnitude earthquake to report</string>
+    <string name="tab_list_title">LIST</string>
+    <string name="tab_map_title">MAP</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="count_earthquakes">%d new earthquakes</string>
+</resources>
